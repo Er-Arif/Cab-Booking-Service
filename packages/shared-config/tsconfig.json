@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@madhupur/shared-types": [
+        "../shared-types/dist"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

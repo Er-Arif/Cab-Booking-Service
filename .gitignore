@@ -1,0 +1,16 @@
+node_modules/
+.next/
+dist/
+.dart_tool/
+.idea/
+.vscode/
+coverage/
+*.log
+.env
+.env.local
+apps/customer_app/build/
+apps/driver_app/build/
+apps/customer_app/.flutter-plugins
+apps/customer_app/.flutter-plugins-dependencies
+apps/driver_app/.flutter-plugins
+apps/driver_app/.flutter-plugins-dependencies

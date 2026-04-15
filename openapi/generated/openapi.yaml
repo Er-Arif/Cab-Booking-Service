@@ -1,0 +1,31 @@
+openapi: 3.0.3
+info:
+  title: Madhupur Ride Booking API
+  version: 0.1.0
+paths:
+  /health:
+    get:
+      summary: Backend health check
+      responses:
+        "200":
+          description: Health payload
+  /api/auth/send-otp:
+    post:
+      summary: Send OTP to a phone number
+  /api/auth/verify-otp:
+    post:
+      summary: Verify OTP and return a JWT
+  /api/pricing/estimate:
+    post:
+      summary: Estimate trip fare for a category
+  /api/rides:
+    get:
+      summary: List rides for the authenticated user
+    post:
+      summary: Create a new ride booking
+  /api/rides/{rideId}/status:
+    patch:
+      summary: Update the ride lifecycle status
+  /api/rides/{rideId}/payment:
+    patch:
+      summary: Record payment completion

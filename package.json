@@ -1,0 +1,17 @@
+{
+  "name": "madhupur-ride-booking-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:backend": "npm --workspace apps/backend run dev",
+    "dev:admin": "npm --workspace apps/admin_web run dev",
+    "build:backend": "npm --workspace apps/backend run build",
+    "build:admin": "npm --workspace apps/admin_web run build",
+    "check:backend": "npm --workspace apps/backend run typecheck",
+    "check:admin": "npm --workspace apps/admin_web run lint"
+  }
+}
