@@ -1,7 +1,7 @@
 import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
 
-import { env } from "config/env";
+import { env } from "../config/env";
 
 export function createSocketServer(httpServer: HttpServer) {
   const io = new Server(httpServer, {

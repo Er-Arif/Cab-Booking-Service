@@ -4,11 +4,17 @@
 1. Copy `.env.example` to `.env`.
 2. Install dependencies from the repo root with `cmd /c npm install`.
 3. Start PostgreSQL with `docker compose up -d postgres` if you want the database locally available.
-4. Run the backend with `cmd /c npm run dev:backend`.
-5. Run the admin panel with `cmd /c npm run dev:admin`.
+4. Initialize the database with `cmd /c npm --workspace apps/backend run db:bootstrap`.
+5. Run the backend with `cmd /c npm run dev:backend`.
+6. Run the admin panel with `cmd /c npm run dev:admin`.
+
+## Backend verification
+- Typecheck: `cmd /c npm --workspace apps/backend run typecheck`
+- Test: `cmd /c npm --workspace apps/backend test`
+- Build: `cmd /c npm --workspace apps/backend run build`
 
 ## Flutter apps
-Flutter is not installed in the current workspace environment, so the source is included but not executed here.
+Flutter is installed in the current workspace environment and both apps compile for web.
 
 When Flutter is available:
 1. `cd apps/customer_app && flutter pub get && flutter run`

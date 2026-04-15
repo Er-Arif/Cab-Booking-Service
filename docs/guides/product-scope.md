@@ -21,3 +21,4 @@ Build a practical ride-booking platform for Madhupur that serves local customer 
 - Revenue rule: 15 percent commission per completed ride
 - Payment methods: cash and UPI
 - Service area: seeded Madhupur pilot zones and landmarks
+- Security baseline: JWT access plus refresh token rotation, role-based authorization, rate limiting, request validation, and security headers

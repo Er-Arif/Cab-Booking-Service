@@ -1,36 +1,77 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-import { env } from "config/env";
+import { env } from "../../config/env";
+import { AuthenticationError, AuthorizationError } from "../../lib/errors";
 
-export interface AuthRequest extends Request {
-  user?: {
-    id: string;
-    phone: string;
-    role: "customer" | "driver" | "admin";
-  };
+export interface AuthenticatedUser {
+  id: string;
+  phone: string;
+  role: "customer" | "driver" | "admin";
+  tokenType: "access" | "refresh";
+  sessionId?: string;
 }
 
-export function signJwt(payload: { id: string; phone: string; role: "customer" | "driver" | "admin" }) {
-  return jwt.sign(payload, env.jwtSecret, { expiresIn: "7d" });
+export interface AuthRequest extends Request {
+  user?: AuthenticatedUser;
+}
+
+export function signAccessToken(payload: { id: string; phone: string; role: "customer" | "driver" | "admin" }) {
+  return jwt.sign(
+    { ...payload, tokenType: "access" },
+    env.jwtSecret,
+    {
+      expiresIn: `${env.accessTokenTtlMinutes}m`,
+      issuer: env.jwtIssuer,
+      audience: env.jwtAudience,
+    }
+  );
+}
+
+export function signRefreshToken(payload: {
+  id: string;
+  phone: string;
+  role: "customer" | "driver" | "admin";
+  sessionId: string;
+}) {
+  return jwt.sign(
+    { ...payload, tokenType: "refresh" },
+    env.jwtSecret,
+    {
+      expiresIn: `${env.refreshTokenTtlDays}d`,
+      issuer: env.jwtIssuer,
+      audience: env.jwtAudience,
+    }
+  );
+}
+
+export function verifyToken(token: string) {
+  return jwt.verify(token, env.jwtSecret, {
+    issuer: env.jwtIssuer,
+    audience: env.jwtAudience,
+  }) as AuthenticatedUser;
 }
 
 export function requireAuth(role?: "customer" | "driver" | "admin") {
-  return (req: AuthRequest, res: Response, next: NextFunction) => {
+  return (req: AuthRequest, _res: Response, next: NextFunction) => {
     const header = req.headers.authorization;
     if (!header?.startsWith("Bearer ")) {
-      return res.status(401).json({ message: "Missing bearer token" });
+      return next(new AuthenticationError("Missing bearer token"));
     }
 
     try {
-      const decoded = jwt.verify(header.slice(7), env.jwtSecret) as AuthRequest["user"];
-      if (role && decoded?.role !== role) {
-        return res.status(403).json({ message: "Forbidden for this role" });
+      const decoded = verifyToken(header.slice(7));
+      if (decoded.tokenType !== "access") {
+        return next(new AuthenticationError("Access token required"));
       }
+      if (role && decoded.role !== role) {
+        return next(new AuthorizationError());
+      }
+
       req.user = decoded;
       return next();
-    } catch (error) {
-      return res.status(401).json({ message: "Invalid token", error });
+    } catch (_error) {
+      return next(new AuthenticationError("Invalid or expired token"));
     }
   };
 }

@@ -1,5 +1,6 @@
 import type { Coordinates } from "../../../../../packages/shared-types/src";
 
+import { env } from "../../config/env";
 import type {
   FileStorageProvider,
   MapsProvider,
@@ -7,17 +8,9 @@ import type {
   PushNotificationProvider,
 } from "./types";
 
-const otpStore = new Map<string, string>();
-
 export class MockOtpProvider implements OtpProvider {
-  async sendOtp(phone: string): Promise<{ requestId: string; otp: string }> {
-    const otp = "123456";
-    otpStore.set(phone, otp);
-    return { requestId: `otp_${phone}`, otp };
-  }
-
-  async verifyOtp(phone: string, otp: string): Promise<boolean> {
-    return otpStore.get(phone) === otp;
+  async sendOtp(phone: string): Promise<{ requestId: string; code: string }> {
+    return { requestId: `otp_${phone}`, code: env.mockOtpCode };
   }
 }
 

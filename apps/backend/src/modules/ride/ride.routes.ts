@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { z } from "zod";
 
-import { requireAuth, type AuthRequest } from "modules/common/auth";
+import { validateBody } from "../../lib/validation";
+import { requireAuth, type AuthRequest } from "../common/auth";
 
 import { RideService } from "./ride.service";
 
@@ -37,39 +38,40 @@ const updateStatusSchema = z.object({
 export function buildRideRouter(rideService: RideService) {
   const router = Router();
 
-  router.get("/", requireAuth(), (_req, res) => {
-    res.json(rideService.listRides());
+  router.get("/", requireAuth(), async (_req, res, next) => {
+    try {
+      res.json(await rideService.listRides());
+    } catch (error) {
+      next(error);
+    }
   });
 
-  router.post("/", requireAuth("customer"), async (req: AuthRequest, res) => {
+  router.post("/", requireAuth("customer"), validateBody(createBookingSchema), async (req: AuthRequest, res, next) => {
     try {
-      const payload = createBookingSchema.parse(req.body);
       const response = await rideService.createBooking({
         customerId: req.user!.id,
-        ...payload,
+        ...req.body,
       });
       res.status(201).json(response);
     } catch (error) {
-      res.status(400).json({ message: "Unable to create booking", error });
+      next(error);
     }
   });
 
-  router.patch("/:rideId/status", requireAuth(), (req, res) => {
+  router.patch("/:rideId/status", requireAuth(), validateBody(updateStatusSchema), async (req, res, next) => {
     try {
-      const payload = updateStatusSchema.parse(req.body);
-      const ride = rideService.updateRideStatus(String(req.params.rideId), payload.status);
+      const ride = await rideService.updateRideStatus(String(req.params.rideId), req.body.status);
       res.json(ride);
     } catch (error) {
-      res.status(400).json({ message: "Unable to update status", error });
+      next(error);
     }
   });
 
-  router.patch("/:rideId/payment", requireAuth(), (req, res) => {
+  router.patch("/:rideId/payment", requireAuth(), async (req, res, next) => {
     try {
-      const result = rideService.markPaymentComplete(String(req.params.rideId));
-      res.json(result);
+      res.json(await rideService.markPaymentComplete(String(req.params.rideId)));
     } catch (error) {
-      res.status(400).json({ message: "Unable to record payment", error });
+      next(error);
     }
   });
 

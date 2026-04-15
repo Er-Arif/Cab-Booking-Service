@@ -1,61 +1,69 @@
 import { Router } from "express";
 import { z } from "zod";
 
-import { requireAuth, type AuthRequest } from "modules/common/auth";
-import { store } from "modules/common/store";
+import { PlatformRepository } from "../../db/repository";
+import { validateBody } from "../../lib/validation";
+import { requireAuth, type AuthRequest } from "../common/auth";
 
 const profileSchema = z.object({
-  name: z.string().min(2),
+  name: z.string().min(2).optional(),
   email: z.string().email().optional(),
   emergencyContact: z.string().optional(),
   preferredPaymentMethod: z.enum(["cash", "upi"]).optional(),
 });
 
 const complaintSchema = z.object({
-  rideId: z.string(),
-  complaintType: z.string(),
+  rideId: z.string().uuid(),
+  complaintType: z.string().min(2),
   description: z.string().min(5),
 });
 
-export function buildCustomerRouter() {
+export function buildCustomerRouter(repository: PlatformRepository) {
   const router = Router();
 
-  router.get("/profile", requireAuth("customer"), (req: AuthRequest, res) => {
-    const customer = store.customers.find((item) => item.id === req.user!.id);
-    res.json(customer);
-  });
-
-  router.put("/profile", requireAuth("customer"), (req: AuthRequest, res) => {
-    const payload = profileSchema.parse(req.body);
-    const customer = store.customers.find((item) => item.id === req.user!.id);
-    if (!customer) {
-      return res.status(404).json({ message: "Customer not found" });
+  router.get("/profile", requireAuth("customer"), async (req: AuthRequest, res, next) => {
+    try {
+      res.json(await repository.getCustomerProfile(req.user!.id));
+    } catch (error) {
+      next(error);
     }
-
-    Object.assign(customer, payload);
-    return res.json(customer);
   });
 
-  router.get("/landmarks", requireAuth("customer"), (_req, res) => {
-    res.json(store.landmarks);
+  router.put("/profile", requireAuth("customer"), validateBody(profileSchema), async (req: AuthRequest, res, next) => {
+    try {
+      res.json(await repository.updateCustomerProfile(req.user!.id, req.body));
+    } catch (error) {
+      next(error);
+    }
   });
 
-  router.get("/rides/history", requireAuth("customer"), (req: AuthRequest, res) => {
-    res.json(store.rides.filter((ride) => ride.customerId === req.user!.id));
+  router.get("/landmarks", requireAuth("customer"), async (_req, res, next) => {
+    try {
+      res.json(await repository.getLandmarks());
+    } catch (error) {
+      next(error);
+    }
   });
 
-  router.post("/complaints", requireAuth("customer"), (req: AuthRequest, res) => {
-    const payload = complaintSchema.parse(req.body);
-    const complaint = {
-      id: `cmp_${Date.now()}`,
-      raisedByType: "customer" as const,
-      raisedById: req.user!.id,
-      resolutionStatus: "open" as const,
-      createdAt: new Date().toISOString(),
-      ...payload,
-    };
-    store.complaints.unshift(complaint);
-    return res.status(201).json(complaint);
+  router.get("/rides/history", requireAuth("customer"), async (req: AuthRequest, res, next) => {
+    try {
+      res.json(await repository.getCustomerRideHistory(req.user!.id));
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  router.post("/complaints", requireAuth("customer"), validateBody(complaintSchema), async (req: AuthRequest, res, next) => {
+    try {
+      const complaint = await repository.createComplaint({
+        ...req.body,
+        raisedByType: "customer",
+        raisedById: req.user!.id,
+      });
+      res.status(201).json(complaint);
+    } catch (error) {
+      next(error);
+    }
   });
 
   return router;

@@ -4,6 +4,8 @@ This repo treats documentation as a product artifact, not an afterthought.
 
 ## Core references
 - Product and MVP scope: [guides/product-scope.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/product-scope.md)
+- Final business rules: [guides/business-rules.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/business-rules.md)
+- Design system: [guides/design-system.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/design-system.md)
 - Setup and local run: [guides/setup.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/setup.md)
 - Environment variables: [guides/environment.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/environment.md)
 - Domain model and ERD notes: [guides/domain-model.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/domain-model.md)
@@ -12,8 +14,9 @@ This repo treats documentation as a product artifact, not an afterthought.
 
 ## Phase documentation
 - Phase 0 discovery: [phases/phase-0-discovery.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-0-discovery.md)
-- Phase 1 system design: [phases/phase-1-system-design.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-1-system-design.md)
-- Phase 2 backend build: [phases/phase-2-backend.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-2-backend.md)
+- Phase 1 product planning: [phases/phase-1-system-design.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-1-system-design.md)
+- Phase 2 UX and UI design: [phases/phase-2-ux-ui.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-2-ux-ui.md)
+- Phase 3 backend build: [phases/phase-2-backend.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-2-backend.md)
 - Phase 3 mobile build: [phases/phase-3-mobile.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-3-mobile.md)
 - Phase 4 admin build: [phases/phase-4-admin.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-4-admin.md)
 - Phase 5 test and launch prep: [phases/phase-5-testing-launch.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-5-testing-launch.md)

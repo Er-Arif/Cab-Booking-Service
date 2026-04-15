@@ -13,11 +13,24 @@ Cloud-ready MVP monorepo for a hyperlocal ride-booking platform serving Madhupur
 ## Quick start
 1. Install Node dependencies from the repo root:
    `cmd /c npm install`
-2. Start the backend:
+2. Copy `.env.example` to `.env`
+3. Start PostgreSQL:
+   `docker compose up -d postgres`
+4. Bootstrap the database:
+   `cmd /c npm --workspace apps/backend run db:bootstrap`
+5. Start the backend:
    `cmd /c npm run dev:backend`
-3. Start the admin web:
+6. Start the admin web:
    `cmd /c npm run dev:admin`
-4. Review Flutter setup in [docs/guides/flutter-setup.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/flutter-setup.md).
+7. Build the Flutter apps for web:
+   `powershell -ExecutionPolicy Bypass -File .\scripts\run-customer-web.ps1`
+   `powershell -ExecutionPolicy Bypass -File .\scripts\run-driver-web.ps1`
+8. Review Flutter setup in [docs/guides/flutter-setup.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/flutter-setup.md).
+
+## Backend verification
+- Typecheck: `cmd /c npm --workspace apps/backend run typecheck`
+- Test: `cmd /c npm --workspace apps/backend test`
+- Build: `cmd /c npm --workspace apps/backend run build`
 
 ## Documentation
 - Documentation index: [docs/README.md](/e:/MyProjects/Cab%20Booking%20Service/docs/README.md)

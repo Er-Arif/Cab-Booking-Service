@@ -1,8 +1,7 @@
 import type { Coordinates } from "../../../../../packages/shared-types/src";
 
 export interface OtpProvider {
-  sendOtp(phone: string): Promise<{ requestId: string; otp: string }>;
-  verifyOtp(phone: string, otp: string): Promise<boolean>;
+  sendOtp(phone: string): Promise<{ requestId: string; code: string }>;
 }
 
 export interface MapsProvider {

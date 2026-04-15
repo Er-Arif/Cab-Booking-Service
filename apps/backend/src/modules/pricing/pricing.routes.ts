@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { z } from "zod";
 
+import { validateBody } from "../../lib/validation";
+
 import { PricingService } from "./pricing.service";
 
 const estimateFareSchema = z.object({
@@ -18,13 +20,12 @@ const estimateFareSchema = z.object({
 export function buildPricingRouter(pricingService: PricingService) {
   const router = Router();
 
-  router.post("/estimate", async (req, res) => {
+  router.post("/estimate", validateBody(estimateFareSchema), async (req, res, next) => {
     try {
-      const payload = estimateFareSchema.parse(req.body);
-      const result = await pricingService.estimateFare(payload);
+      const result = await pricingService.estimateFare(req.body);
       res.json(result);
     } catch (error) {
-      res.status(400).json({ message: "Unable to estimate fare", error });
+      next(error);
     }
   });
 
