@@ -79,25 +79,33 @@ class CustomerApiService {
     String? pickupNote,
     String? dropNote,
   }) async {
+    final body = <String, dynamic>{
+      'categoryKey': categoryKey,
+      'pickupAddress': pickup.name,
+      'dropAddress': drop.name,
+      'pickup': {
+        'latitude': pickup.latitude,
+        'longitude': pickup.longitude,
+      },
+      'drop': {
+        'latitude': drop.latitude,
+        'longitude': drop.longitude,
+      },
+      'paymentMethod': paymentMethod,
+    };
+
+    if (pickupNote != null) {
+      body['pickupNote'] = pickupNote;
+    }
+
+    if (dropNote != null) {
+      body['dropNote'] = dropNote;
+    }
+
     final response = await _client.postJson(
       '/api/rides',
       accessToken: accessToken,
-      body: {
-        'categoryKey': categoryKey,
-        'pickupAddress': pickup.name,
-        'dropAddress': drop.name,
-        'pickupNote': pickupNote,
-        'dropNote': dropNote,
-        'pickup': {
-          'latitude': pickup.latitude,
-          'longitude': pickup.longitude,
-        },
-        'drop': {
-          'latitude': drop.latitude,
-          'longitude': drop.longitude,
-        },
-        'paymentMethod': paymentMethod,
-      },
+      body: body,
     );
 
     return RideRecord.fromJson(response['ride'] as Map<String, dynamic>);

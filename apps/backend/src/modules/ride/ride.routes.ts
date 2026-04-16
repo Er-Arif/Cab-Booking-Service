@@ -10,8 +10,8 @@ const createBookingSchema = z.object({
   categoryKey: z.enum(["bike", "e_rickshaw"]),
   pickupAddress: z.string().min(2),
   dropAddress: z.string().min(2),
-  pickupNote: z.string().optional(),
-  dropNote: z.string().optional(),
+  pickupNote: z.string().nullish(),
+  dropNote: z.string().nullish(),
   pickup: z.object({
     latitude: z.number(),
     longitude: z.number(),
