@@ -6,7 +6,7 @@ dotenv.config();
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   PORT: z.coerce.number().int().positive().default(4000),
-  DATABASE_URL: z.string().min(1).default("postgresql://postgres:postgres@localhost:5432/madhupur_rides"),
+  DATABASE_URL: z.string().min(1).default("postgresql://postgres:postgres@localhost:5433/madhupur_rides"),
   JWT_SECRET: z.string().min(10).default("change-me-production-secret"),
   JWT_ISSUER: z.string().default("madhupur-rides-api"),
   JWT_AUDIENCE: z.string().default("madhupur-rides-clients"),
