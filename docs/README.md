@@ -31,4 +31,20 @@ This repo treats documentation as a product artifact, not an afterthought.
 ## Decisions and operations
 - Architecture decisions: [adr/README.md](/e:/MyProjects/Cab%20Booking%20Service/docs/adr/README.md)
 - Pilot and launch notes: [operations/pilot-launch.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/pilot-launch.md)
+- Operations handbook: [operations/operations-handbook.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/operations-handbook.md)
+- Launch playbooks:
+  - [operations/pre-launch-checklist.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/pre-launch-checklist.md)
+  - [operations/launch-day-playbook.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/launch-day-playbook.md)
+  - [operations/post-launch-review.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/post-launch-review.md)
+  - [operations/rollback-fallback-guide.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/rollback-fallback-guide.md)
+- Monitoring and incident response:
+  - [operations/monitoring-checklist.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/monitoring-checklist.md)
+  - [operations/incident-response-guide.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/incident-response-guide.md)
+  - [operations/incident-log-template.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/incident-log-template.md)
+- Version 1 closure package:
+  - [operations/version1-signoff-report.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-signoff-report.md)
+  - [operations/version1-known-limitations.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-known-limitations.md)
+  - [operations/version1-risk-register.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-risk-register.md)
+  - [operations/version1-handoff.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-handoff.md)
+  - [operations/version2-transition-plan.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version2-transition-plan.md)
 - Deferred roadmap: [operations/deferred-roadmap.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/deferred-roadmap.md)

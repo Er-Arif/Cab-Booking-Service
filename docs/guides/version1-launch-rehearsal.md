@@ -6,6 +6,12 @@ Use this guide to rehearse the full Version 1 product before pilot sign-off.
 - Confirm that backend, admin, customer, and driver surfaces work together with the Version 1 mock or local provider boundaries.
 - Rehearse the exact seeded flows the team will use during demos, QA, and operator sign-off.
 
+## Companion launch playbooks
+- Pre-launch checklist: [../operations/pre-launch-checklist.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/pre-launch-checklist.md)
+- Launch day playbook: [../operations/launch-day-playbook.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/launch-day-playbook.md)
+- Post-launch review: [../operations/post-launch-review.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/post-launch-review.md)
+- Rollback and fallback guide: [../operations/rollback-fallback-guide.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/rollback-fallback-guide.md)
+
 ## Seeded access
 - Admin phone: `9000000001`
 - Customer phone: `9000000002`

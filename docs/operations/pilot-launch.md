@@ -29,3 +29,25 @@
 - Watch pickup delay trends
 - Validate fare comfort for short trips
 - Gather support reasons and route demand
+
+## Operator playbooks
+- Master handbook: [operations-handbook.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/operations-handbook.md)
+- Driver onboarding SOP: [driver-onboarding-sop.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/driver-onboarding-sop.md)
+- Complaint handling SOP: [complaint-handling-sop.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/complaint-handling-sop.md)
+- Fare management SOP: [fare-management-sop.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/fare-management-sop.md)
+- Payout and revenue SOP: [payout-revenue-sop.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/payout-revenue-sop.md)
+- Admin panel usage guide: [admin-panel-usage.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/admin-panel-usage.md)
+- Pre-launch checklist: [pre-launch-checklist.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/pre-launch-checklist.md)
+- Launch day playbook: [launch-day-playbook.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/launch-day-playbook.md)
+- Post-launch review: [post-launch-review.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/post-launch-review.md)
+- Rollback and fallback guide: [rollback-fallback-guide.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/rollback-fallback-guide.md)
+- Monitoring checklist: [monitoring-checklist.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/monitoring-checklist.md)
+- Incident response guide: [incident-response-guide.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/incident-response-guide.md)
+- Incident log template: [incident-log-template.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/incident-log-template.md)
+
+## Version 1 closure package
+- Sign-off report: [version1-signoff-report.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-signoff-report.md)
+- Known limitations: [version1-known-limitations.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-known-limitations.md)
+- Risk register: [version1-risk-register.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-risk-register.md)
+- Handoff note: [version1-handoff.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-handoff.md)
+- Version 2 transition plan: [version2-transition-plan.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version2-transition-plan.md)
