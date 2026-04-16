@@ -12,6 +12,9 @@
     "build:backend": "npm --workspace apps/backend run build",
     "build:admin": "npm --workspace apps/admin_web run build",
     "check:backend": "npm --workspace apps/backend run typecheck",
-    "check:admin": "npm --workspace apps/admin_web run lint"
+    "check:admin": "npm --workspace apps/admin_web run lint",
+    "test:backend": "npm --workspace apps/backend test",
+    "verify:node": "cmd /c npm run check:backend && npm run test:backend && npm run build:admin",
+    "verify:version1": "powershell -ExecutionPolicy Bypass -File .\\scripts\\verify-version1.ps1"
   }
 }

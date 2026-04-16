@@ -12,6 +12,8 @@
 - Typecheck: `cmd /c npm --workspace apps/backend run typecheck`
 - Test: `cmd /c npm --workspace apps/backend test`
 - Build: `cmd /c npm --workspace apps/backend run build`
+- Full Version 1 verification: `powershell -ExecutionPolicy Bypass -File .\scripts\verify-version1.ps1`
+- Full Version 1 rehearsal: `powershell -ExecutionPolicy Bypass -File .\scripts\rehearse-version1.ps1`
 
 ## Flutter apps
 Flutter is installed in the current workspace environment and both apps compile for web.
@@ -25,3 +27,7 @@ When Flutter is available:
 - Customer phone: `9000000002`
 - Driver phone: `9000000003`
 - Mock OTP: `123456`
+
+## Deployment readiness
+- Production-like deployment guide: [deployment.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/deployment.md)
+- Version 1 deployment stack: `docker compose --env-file .env.production -f docker-compose.version1.yml up --build -d`

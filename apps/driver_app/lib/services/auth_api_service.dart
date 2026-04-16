@@ -39,4 +39,13 @@ class AuthApiService {
       phone: phone,
     );
   }
+
+  Future<void> logout(String refreshToken) async {
+    await _client.postJson(
+      '/api/auth/logout',
+      body: {
+        'refreshToken': refreshToken,
+      },
+    );
+  }
 }

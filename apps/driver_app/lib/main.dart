@@ -7,6 +7,7 @@ import 'screens/auth/driver_login_screen.dart';
 import 'screens/driver_shell_screen.dart';
 import 'services/api_client.dart';
 import 'services/auth_api_service.dart';
+import 'services/driver_api_service.dart';
 import 'services/session_storage.dart';
 import 'state/driver_app_controller.dart';
 
@@ -16,7 +17,12 @@ void main() {
 }
 
 class DriverApp extends StatefulWidget {
-  const DriverApp({super.key});
+  const DriverApp({
+    super.key,
+    this.controller,
+  });
+
+  final DriverAppController? controller;
 
   @override
   State<DriverApp> createState() => _DriverAppState();
@@ -28,12 +34,25 @@ class _DriverAppState extends State<DriverApp> {
   @override
   void initState() {
     super.initState();
-    _controller = DriverAppController(
+    _controller = widget.controller ?? _createController();
+    _controller.bootstrap();
+  }
+
+  DriverAppController _createController() {
+    final apiClient = ApiClient(baseUrl: AppConfig.apiBaseUrl);
+    return DriverAppController(
       authApi: AuthApiService(
-        ApiClient(baseUrl: AppConfig.apiBaseUrl),
+        apiClient,
       ),
+      driverApi: DriverApiService(apiClient),
       sessionStorage: SessionStorage(),
-    )..bootstrap();
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

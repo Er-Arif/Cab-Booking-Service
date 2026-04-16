@@ -16,23 +16,72 @@ class ApiClient {
     Map<String, dynamic>? body,
     String? accessToken,
   }) async {
-    final response = await _httpClient.post(
-      Uri.parse('$baseUrl$path'),
-      headers: {
-        'Content-Type': 'application/json',
-        if (accessToken != null) 'Authorization': 'Bearer $accessToken',
-      },
-      body: jsonEncode(body ?? <String, dynamic>{}),
-    );
-
-    return _decodeResponse(response);
+    return _send(
+      () => _httpClient.post(
+        Uri.parse('$baseUrl$path'),
+        headers: _headers(accessToken),
+        body: jsonEncode(body ?? <String, dynamic>{}),
+      ),
+    ) as Future<Map<String, dynamic>>;
   }
 
-  Map<String, dynamic> _decodeResponse(http.Response response) {
-    final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+  Future<dynamic> getJson(
+    String path, {
+    String? accessToken,
+  }) {
+    return _send(
+      () => _httpClient.get(
+        Uri.parse('$baseUrl$path'),
+        headers: {
+          if (accessToken != null) 'Authorization': 'Bearer $accessToken',
+        },
+      ),
+    );
+  }
+
+  Future<dynamic> patchJson(
+    String path, {
+    Map<String, dynamic>? body,
+    String? accessToken,
+  }) {
+    return _send(
+      () => _httpClient.patch(
+        Uri.parse('$baseUrl$path'),
+        headers: _headers(accessToken),
+        body: jsonEncode(body ?? <String, dynamic>{}),
+      ),
+    );
+  }
+
+  Future<dynamic> putJson(
+    String path, {
+    Map<String, dynamic>? body,
+    String? accessToken,
+  }) {
+    return _send(
+      () => _httpClient.put(
+        Uri.parse('$baseUrl$path'),
+        headers: _headers(accessToken),
+        body: jsonEncode(body ?? <String, dynamic>{}),
+      ),
+    );
+  }
+
+  Map<String, String> _headers(String? accessToken) {
+    return {
+      'Content-Type': 'application/json',
+      if (accessToken != null) 'Authorization': 'Bearer $accessToken',
+    };
+  }
+
+  Future<dynamic> _send(Future<http.Response> Function() request) async {
+    final response = await request();
+    final decoded = jsonDecode(response.body);
     if (response.statusCode >= 400) {
       throw ApiException(
-        message: decoded['message']?.toString() ?? 'Request failed',
+        message: decoded is Map<String, dynamic>
+            ? decoded['message']?.toString() ?? 'Request failed'
+            : 'Request failed',
         statusCode: response.statusCode,
       );
     }

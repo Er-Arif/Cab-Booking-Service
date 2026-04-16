@@ -40,7 +40,8 @@ export function buildRideRouter(rideService: RideService) {
 
   router.get("/", requireAuth(), async (_req, res, next) => {
     try {
-      res.json(await rideService.listRides());
+      const authReq = _req as AuthRequest;
+      res.json(await rideService.listRides({ id: authReq.user!.id, role: authReq.user!.role }));
     } catch (error) {
       next(error);
     }

@@ -70,6 +70,14 @@ export function buildDriverRouter(repository: PlatformRepository) {
     }
   });
 
+  router.get("/active-ride", requireAuth("driver"), async (req: AuthRequest, res, next) => {
+    try {
+      res.json(await repository.getActiveDriverRide(req.user!.id));
+    } catch (error) {
+      next(error);
+    }
+  });
+
   router.post("/issues", requireAuth("driver"), validateBody(issueSchema), async (req: AuthRequest, res, next) => {
     try {
       const complaint = await repository.createComplaint({

@@ -45,7 +45,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Phase 4.1 foundation uses the live backend auth flow with persisted session storage.',
+                      'Use the seeded customer number 9000000002 and OTP 123456 to test the full mobile booking flow.',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 20),

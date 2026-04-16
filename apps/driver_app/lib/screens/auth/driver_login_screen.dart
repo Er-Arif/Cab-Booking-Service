@@ -45,7 +45,7 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Phase 4.1 foundation uses the live backend auth flow with persisted driver session storage.',
+                      'Use the seeded driver number 9000000003 and OTP 123456 to test the full driver operations flow.',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 20),

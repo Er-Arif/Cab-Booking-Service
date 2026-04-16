@@ -32,9 +32,19 @@ Cloud-ready MVP monorepo for a hyperlocal ride-booking platform serving Madhupur
 - Test: `cmd /c npm --workspace apps/backend test`
 - Build: `cmd /c npm --workspace apps/backend run build`
 
+## Frontend and mobile verification
+- Admin web build: `cmd /c npm --workspace apps/admin_web run build`
+- Customer Flutter tests: `puro flutter test` from `apps/customer_app`
+- Driver Flutter tests: `puro flutter test` from `apps/driver_app`
+- Customer Flutter web build: `powershell -ExecutionPolicy Bypass -File .\scripts\run-customer-web.ps1`
+- Driver Flutter web build: `powershell -ExecutionPolicy Bypass -File .\scripts\run-driver-web.ps1`
+- Full Version 1 verification: `powershell -ExecutionPolicy Bypass -File .\scripts\verify-version1.ps1`
+- Full Version 1 rehearsal: `powershell -ExecutionPolicy Bypass -File .\scripts\rehearse-version1.ps1`
+
 ## Documentation
 - Documentation index: [docs/README.md](/e:/MyProjects/Cab%20Booking%20Service/docs/README.md)
 - Product blueprint source: [madhupur_ride_booking_app_blueprint.md](/e:/MyProjects/Cab%20Booking%20Service/madhupur_ride_booking_app_blueprint.md)
+- Deployment guide: [docs/guides/deployment.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/deployment.md)
 
 ## MVP defaults
 - Ride categories: bike, e-rickshaw

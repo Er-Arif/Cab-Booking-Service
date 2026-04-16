@@ -53,6 +53,14 @@ export function buildCustomerRouter(repository: PlatformRepository) {
     }
   });
 
+  router.get("/active-ride", requireAuth("customer"), async (req: AuthRequest, res, next) => {
+    try {
+      res.json(await repository.getActiveCustomerRide(req.user!.id));
+    } catch (error) {
+      next(error);
+    }
+  });
+
   router.post("/complaints", requireAuth("customer"), validateBody(complaintSchema), async (req: AuthRequest, res, next) => {
     try {
       const complaint = await repository.createComplaint({

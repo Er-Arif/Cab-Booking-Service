@@ -7,7 +7,11 @@ This repo treats documentation as a product artifact, not an afterthought.
 - Final business rules: [guides/business-rules.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/business-rules.md)
 - Design system: [guides/design-system.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/design-system.md)
 - Setup and local run: [guides/setup.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/setup.md)
+- Deployment guide: [guides/deployment.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/deployment.md)
 - Environment variables: [guides/environment.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/environment.md)
+- Testing strategy: [guides/testing-strategy.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/testing-strategy.md)
+- Version 1 acceptance checklist: [guides/version1-acceptance-checklist.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/version1-acceptance-checklist.md)
+- Version 1 launch rehearsal: [guides/version1-launch-rehearsal.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/version1-launch-rehearsal.md)
 - Domain model and ERD notes: [guides/domain-model.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/domain-model.md)
 - API catalog: [api/rest-api.md](/e:/MyProjects/Cab%20Booking%20Service/docs/api/rest-api.md)
 - Realtime events: [api/realtime-events.md](/e:/MyProjects/Cab%20Booking%20Service/docs/api/realtime-events.md)
@@ -20,6 +24,7 @@ This repo treats documentation as a product artifact, not an afterthought.
 - Phase 3 mobile build: [phases/phase-3-mobile.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-3-mobile.md)
 - Phase 4 admin build: [phases/phase-4-admin.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-4-admin.md)
 - Phase 5 test and launch prep: [phases/phase-5-testing-launch.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-5-testing-launch.md)
+- Phase 7 pilot launch prep: [phases/phase-6-pilot-launch.md](/e:/MyProjects/Cab%20Booking%20Service/docs/phases/phase-6-pilot-launch.md)
 
 ## Decisions and operations
 - Architecture decisions: [adr/README.md](/e:/MyProjects/Cab%20Booking%20Service/docs/adr/README.md)

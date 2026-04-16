@@ -1,5 +1,12 @@
 # Pilot Launch Notes
 
+## Version 1 launch policy
+- Pilot launch stays on mock, dev, or local adapters for external services wherever possible so the team can validate operations without vendor lock-in.
+- OTP stays on the mock development flow unless a pilot-specific SMS provider is explicitly approved later.
+- Maps remain landmark-first with local pricing and routing logic for Version 1.
+- Payment remains cash and UPI record-tracking in Version 1 rather than real gateway collection.
+- Real provider onboarding is deferred to Version 2 after MVP workflows, admin operations, and pilot learnings are stable.
+
 ## Suggested pilot footprint
 - Railway Station
 - Bus Stand

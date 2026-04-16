@@ -143,6 +143,19 @@ export class PlatformRepository {
     return result.rows.map(mapRide);
   }
 
+  async getActiveCustomerRide(customerId: string) {
+    const result = await this.db.query(
+      `select * from rides
+       where customer_id = $1
+         and status not in ('payment_completed', 'cancelled_by_user', 'cancelled_by_driver', 'cancelled_by_admin')
+       order by booked_at desc
+       limit 1`,
+      [customerId]
+    );
+
+    return result.rows[0] ? mapRide(result.rows[0]) : null;
+  }
+
   async createComplaint(payload: {
     rideId: string;
     raisedByType: "customer" | "driver";
@@ -198,6 +211,19 @@ export class PlatformRepository {
   async getDriverHistory(driverId: string) {
     const result = await this.db.query("select * from rides where driver_id = $1 order by booked_at desc", [driverId]);
     return result.rows.map(mapRide);
+  }
+
+  async getActiveDriverRide(driverId: string) {
+    const result = await this.db.query(
+      `select * from rides
+       where driver_id = $1
+         and status not in ('payment_completed', 'cancelled_by_user', 'cancelled_by_driver', 'cancelled_by_admin')
+       order by booked_at desc
+       limit 1`,
+      [driverId]
+    );
+
+    return result.rows[0] ? mapRide(result.rows[0]) : null;
   }
 
   async getDriverEarnings(driverId: string) {
@@ -420,6 +446,21 @@ export class PlatformRepository {
 
   async listRides() {
     const result = await this.db.query("select * from rides order by booked_at desc");
+    return result.rows.map(mapRide);
+  }
+
+  async listRidesForPrincipal(principal: { id: string; role: "customer" | "driver" | "admin" }) {
+    if (principal.role === "admin") {
+      return this.listRides();
+    }
+
+    const result = await this.db.query(
+      principal.role === "customer"
+          ? "select * from rides where customer_id = $1 order by booked_at desc"
+          : "select * from rides where driver_id = $1 order by booked_at desc",
+      [principal.id]
+    );
+
     return result.rows.map(mapRide);
   }
 

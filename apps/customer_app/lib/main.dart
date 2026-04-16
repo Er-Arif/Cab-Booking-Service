@@ -7,6 +7,7 @@ import 'screens/auth/customer_login_screen.dart';
 import 'screens/customer_shell_screen.dart';
 import 'services/api_client.dart';
 import 'services/auth_api_service.dart';
+import 'services/customer_api_service.dart';
 import 'services/session_storage.dart';
 import 'state/customer_app_controller.dart';
 
@@ -16,7 +17,12 @@ void main() {
 }
 
 class CustomerApp extends StatefulWidget {
-  const CustomerApp({super.key});
+  const CustomerApp({
+    super.key,
+    this.controller,
+  });
+
+  final CustomerAppController? controller;
 
   @override
   State<CustomerApp> createState() => _CustomerAppState();
@@ -28,12 +34,25 @@ class _CustomerAppState extends State<CustomerApp> {
   @override
   void initState() {
     super.initState();
-    _controller = CustomerAppController(
+    _controller = widget.controller ?? _createController();
+    _controller.bootstrap();
+  }
+
+  CustomerAppController _createController() {
+    final apiClient = ApiClient(baseUrl: AppConfig.apiBaseUrl);
+    return CustomerAppController(
       authApi: AuthApiService(
-        ApiClient(baseUrl: AppConfig.apiBaseUrl),
+        apiClient,
       ),
+      customerApi: CustomerApiService(apiClient),
       sessionStorage: SessionStorage(),
-    )..bootstrap();
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

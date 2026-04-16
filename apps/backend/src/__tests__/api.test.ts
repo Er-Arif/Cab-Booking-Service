@@ -15,6 +15,22 @@ describe("Madhupur backend API", () => {
     app = built.app;
   });
 
+  async function authenticate(phone: string, role: "customer" | "driver" | "admin") {
+    await request(app).post("/api/auth/send-otp").send({ phone, role }).expect(200);
+    const response = await request(app).post("/api/auth/verify-otp").send({
+      phone,
+      otp: "123456",
+      role,
+    }).expect(200);
+
+    return response.body as {
+      accessToken: string;
+      refreshToken: string;
+      userId: string;
+      role: string;
+    };
+  }
+
   it("authenticates a customer with OTP and returns access and refresh tokens", async () => {
     await request(app).post("/api/auth/send-otp").send({
       phone: "9000000002",
@@ -133,5 +149,92 @@ describe("Madhupur backend API", () => {
       .expect(200);
 
     expect(resolved.body.resolutionStatus).toBe("resolved");
+  });
+
+  it("scopes ride access and active ride endpoints by principal", async () => {
+    const customerAuth = await authenticate("9000000002", "customer");
+    const driverAuth = await authenticate("9000000003", "driver");
+    const adminAuth = await authenticate("9000000001", "admin");
+
+    const rideCreation = await request(app)
+      .post("/api/rides")
+      .set("Authorization", `Bearer ${customerAuth.accessToken}`)
+      .send({
+        categoryKey: "bike",
+        pickupAddress: "Bus Stand",
+        dropAddress: "Hospital Area",
+        pickup: { latitude: 24.2712, longitude: 86.6463 },
+        drop: { latitude: 24.2699, longitude: 86.6449 },
+        paymentMethod: "upi",
+      })
+      .expect(201);
+
+    const rideId = rideCreation.body.ride.id as string;
+
+    const customerRides = await request(app)
+      .get("/api/rides")
+      .set("Authorization", `Bearer ${customerAuth.accessToken}`)
+      .expect(200);
+    const driverRides = await request(app)
+      .get("/api/rides")
+      .set("Authorization", `Bearer ${driverAuth.accessToken}`)
+      .expect(200);
+    const adminRides = await request(app)
+      .get("/api/rides")
+      .set("Authorization", `Bearer ${adminAuth.accessToken}`)
+      .expect(200);
+
+    expect(customerRides.body.some((ride: { id: string }) => ride.id === rideId)).toBe(true);
+    expect(driverRides.body.some((ride: { id: string }) => ride.id === rideId)).toBe(true);
+    expect(adminRides.body.some((ride: { id: string }) => ride.id === rideId)).toBe(true);
+
+    const customerActiveRide = await request(app)
+      .get("/api/customer/active-ride")
+      .set("Authorization", `Bearer ${customerAuth.accessToken}`)
+      .expect(200);
+    const driverActiveRide = await request(app)
+      .get("/api/driver/active-ride")
+      .set("Authorization", `Bearer ${driverAuth.accessToken}`)
+      .expect(200);
+
+    expect(customerActiveRide.body.id).toBe(rideId);
+    expect(driverActiveRide.body.id).toBe(rideId);
+  });
+
+  it("allows admin fare and driver verification updates", async () => {
+    const adminAuth = await authenticate("9000000001", "admin");
+
+    const drivers = await request(app)
+      .get("/api/admin/drivers")
+      .set("Authorization", `Bearer ${adminAuth.accessToken}`)
+      .expect(200);
+    const categories = await request(app)
+      .get("/api/admin/categories")
+      .set("Authorization", `Bearer ${adminAuth.accessToken}`)
+      .expect(200);
+
+    const updatedDriver = await request(app)
+      .patch(`/api/admin/drivers/${drivers.body[0].id}/status`)
+      .set("Authorization", `Bearer ${adminAuth.accessToken}`)
+      .send({ status: "suspended" })
+      .expect(200);
+
+    expect(updatedDriver.body.status).toBe("suspended");
+
+    const updatedCategory = await request(app)
+      .patch(`/api/admin/categories/${categories.body[0].id}`)
+      .set("Authorization", `Bearer ${adminAuth.accessToken}`)
+      .send({
+        baseFare: 42,
+        minimumFare: 45,
+        perKmRate: 13,
+        perMinuteRate: 2,
+        waitingCharge: 3,
+        cancellationFee: 10,
+      })
+      .expect(200);
+
+    expect(updatedCategory.body.baseFare).toBe(42);
+    expect(updatedCategory.body.minimumFare).toBe(45);
   });
 });

@@ -85,8 +85,8 @@ export class RideService {
     };
   }
 
-  async listRides() {
-    return this.repository.listRides();
+  async listRides(principal: { id: string; role: "customer" | "driver" | "admin" }) {
+    return this.repository.listRidesForPrincipal(principal);
   }
 
   async updateRideStatus(rideId: string, status: RideStatus) {
