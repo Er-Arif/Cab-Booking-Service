@@ -16,13 +16,22 @@ class ApiClient {
     Map<String, dynamic>? body,
     String? accessToken,
   }) async {
-    return _send(
+    final response = await _send(
       () => _httpClient.post(
         Uri.parse('$baseUrl$path'),
         headers: _headers(accessToken),
         body: jsonEncode(body ?? <String, dynamic>{}),
       ),
-    ) as Future<Map<String, dynamic>>;
+    );
+
+    if (response is! Map<String, dynamic>) {
+      throw ApiException(
+        message: 'Expected a JSON object response.',
+        statusCode: 500,
+      );
+    }
+
+    return response;
   }
 
   Future<dynamic> getJson(

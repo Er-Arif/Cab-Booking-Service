@@ -13,6 +13,9 @@ const envSchema = z.object({
   ACCESS_TOKEN_TTL_MINUTES: z.coerce.number().int().positive().default(30),
   REFRESH_TOKEN_TTL_DAYS: z.coerce.number().int().positive().default(14),
   ADMIN_WEB_ORIGIN: z.string().default("http://localhost:3000"),
+  ALLOWED_WEB_ORIGINS: z.string().default(
+    "http://localhost:3000,http://127.0.0.1:4100,http://127.0.0.1:4200,http://localhost:4100,http://localhost:4200",
+  ),
   OTP_PROVIDER: z.string().default("mock"),
   MAPS_PROVIDER: z.string().default("mock"),
   PUSH_PROVIDER: z.string().default("mock"),
@@ -39,6 +42,7 @@ export const env = {
   accessTokenTtlMinutes: parsed.data.ACCESS_TOKEN_TTL_MINUTES,
   refreshTokenTtlDays: parsed.data.REFRESH_TOKEN_TTL_DAYS,
   adminWebOrigin: parsed.data.ADMIN_WEB_ORIGIN,
+  allowedWebOrigins: parsed.data.ALLOWED_WEB_ORIGINS.split(",").map((origin) => origin.trim()).filter(Boolean),
   otpProvider: parsed.data.OTP_PROVIDER,
   mapsProvider: parsed.data.MAPS_PROVIDER,
   pushProvider: parsed.data.PUSH_PROVIDER,

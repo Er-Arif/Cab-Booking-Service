@@ -8,12 +8,23 @@ import pinoHttp from "pino-http";
 import { env } from "../config/env";
 
 export function commonSecurityMiddleware() {
+  const allowedOrigins = new Set(env.allowedWebOrigins);
+
   return [
     pinoHttp({
       redact: ["req.headers.authorization"],
     }),
     helmet(),
-    cors({ origin: env.adminWebOrigin }),
+    cors({
+      origin(origin, callback) {
+        if (!origin || allowedOrigins.has(origin)) {
+          callback(null, true);
+          return;
+        }
+
+        callback(new Error(`Origin ${origin} is not allowed by CORS`));
+      },
+    }),
     compression(),
     express.json({ limit: "1mb" }),
     rateLimit({
