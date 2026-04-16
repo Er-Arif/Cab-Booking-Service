@@ -45,6 +45,7 @@ Cloud-ready MVP monorepo for a hyperlocal ride-booking platform serving Madhupur
 - Documentation index: [docs/README.md](/e:/MyProjects/Cab%20Booking%20Service/docs/README.md)
 - Product blueprint source: [madhupur_ride_booking_app_blueprint.md](/e:/MyProjects/Cab%20Booking%20Service/madhupur_ride_booking_app_blueprint.md)
 - Deployment guide: [docs/guides/deployment.md](/e:/MyProjects/Cab%20Booking%20Service/docs/guides/deployment.md)
+- Legal pack: [docs/legal/README.md](/e:/MyProjects/Cab%20Booking%20Service/docs/legal/README.md)
 
 ## MVP defaults
 - Ride categories: bike, e-rickshaw
@@ -52,3 +53,4 @@ Cloud-ready MVP monorepo for a hyperlocal ride-booking platform serving Madhupur
 - Dispatch rule: nearest-first
 - Payment methods: cash and UPI record-tracking
 - External integrations: mockable provider interfaces for OTP, maps, notifications, and file storage
+- Legal posture: Version 1 uses internal pilot legal templates that require lawyer review before wider public launch

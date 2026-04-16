@@ -1,0 +1,112 @@
+{
+  "city": "Madhupur",
+  "state": "Jharkhand",
+  "launchPolicy": {
+    "providerMode": "mock-dev-local",
+    "otp": "mock",
+    "maps": "landmark-first-local-routing",
+    "payments": "cash-and-upi-record-tracking"
+  },
+  "serviceZones": [
+    {
+      "id": "zone_station",
+      "name": "Railway Station",
+      "status": "active",
+      "notes": "Pilot priority zone"
+    },
+    {
+      "id": "zone_busstand",
+      "name": "Bus Stand",
+      "status": "active",
+      "notes": "High-footfall arrival point"
+    },
+    {
+      "id": "zone_market",
+      "name": "Main Market",
+      "status": "active",
+      "notes": "Dense local trips"
+    },
+    {
+      "id": "zone_hospital",
+      "name": "Hospital Area",
+      "status": "active",
+      "notes": "Care and emergency travel"
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_1",
+      "name": "Madhupur Railway Station",
+      "zoneId": "zone_station"
+    },
+    {
+      "id": "lm_2",
+      "name": "Bus Stand",
+      "zoneId": "zone_busstand"
+    },
+    {
+      "id": "lm_3",
+      "name": "Main Market",
+      "zoneId": "zone_market"
+    },
+    {
+      "id": "lm_4",
+      "name": "Hospital Area",
+      "zoneId": "zone_hospital"
+    }
+  ],
+  "rideCategories": [
+    {
+      "id": "cat_bike",
+      "key": "bike",
+      "label": "Bike",
+      "baseFare": 20,
+      "minimumFare": 35,
+      "perKmRate": 9,
+      "perMinuteRate": 1,
+      "waitingCharge": 2,
+      "cancellationFee": 10,
+      "freeWaitingMinutes": 3
+    },
+    {
+      "id": "cat_erickshaw",
+      "key": "e_rickshaw",
+      "label": "E-rickshaw",
+      "baseFare": 30,
+      "minimumFare": 50,
+      "perKmRate": 12,
+      "perMinuteRate": 1,
+      "waitingCharge": 3,
+      "cancellationFee": 15,
+      "freeWaitingMinutes": 5
+    }
+  ],
+  "seededAccess": {
+    "admin": {
+      "phone": "9000000001",
+      "otp": "123456"
+    },
+    "customer": {
+      "phone": "9000000002",
+      "otp": "123456"
+    },
+    "drivers": [
+      {
+        "name": "Rakesh Yadav",
+        "phone": "9000000003",
+        "vehicleType": "bike"
+      },
+      {
+        "name": "Sanjay Das",
+        "phone": "9000000004",
+        "vehicleType": "e_rickshaw"
+      }
+    ]
+  },
+  "opsDefaults": {
+    "commissionRate": 0.15,
+    "settlementCycle": "weekly",
+    "complaintFirstResponseHours": 4,
+    "complaintResolutionHours": 24
+  }
+}

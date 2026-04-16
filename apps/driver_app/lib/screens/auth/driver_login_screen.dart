@@ -26,10 +26,10 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
 
     return Scaffold(
       body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 460),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 460),
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(24),
@@ -47,6 +47,12 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
                     Text(
                       'Use the seeded driver number 9000000003 and OTP 123456 to test the full driver operations flow.',
                       style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 12),
+                    const _LegalNoticeCard(
+                      title: 'Driver consent',
+                      body:
+                          'By continuing, you agree to the Terms and Conditions, Privacy Policy, and Driver Agreement for the Version 1 pilot.',
                     ),
                     const SizedBox(height: 20),
                     TextField(
@@ -116,6 +122,47 @@ class _DriverLoginScreenState extends State<DriverLoginScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _LegalNoticeCard extends StatelessWidget {
+  const _LegalNoticeCard({
+    required this.title,
+    required this.body,
+  });
+
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF6EFE6),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFDCC8AE)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+          const SizedBox(height: 6),
+          Text(body),
+          const SizedBox(height: 6),
+          Text(
+            'Source templates live in docs/legal for review before public rollout.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
       ),
     );
   }

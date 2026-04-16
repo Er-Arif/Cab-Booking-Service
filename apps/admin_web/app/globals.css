@@ -97,6 +97,12 @@ a {
   width: 100%;
 }
 
+.sidebar-legal {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
 .hero {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -255,6 +261,46 @@ a {
   color: var(--muted);
 }
 
+.legal-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-shell {
+  display: grid;
+  gap: 20px;
+}
+
+.legal-list {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.legal-path {
+  font-family: "Courier New", monospace;
+  color: var(--accent-2);
+}
+
+.legal-page-shell {
+  min-height: 100vh;
+}
+
+.legal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 28px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 250, 240, 0.92);
+}
+
+.legal-main {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
 .status-ok {
   color: var(--accent);
 }
@@ -273,6 +319,11 @@ a {
   }
 
   .main {
+    padding: 20px;
+  }
+
+  .legal-header {
+    flex-direction: column;
     padding: 20px;
   }
 }

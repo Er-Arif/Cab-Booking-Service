@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
 import { useAdminSession } from "./admin-provider";
@@ -32,6 +33,25 @@ export function AdminAuthGate({ children }: { children: ReactNode }) {
         <p className="muted">
           Version 1 uses seeded admin access so the panel can run against the live backend without a third-party OTP
           service.
+        </p>
+        <p className="muted">
+          By continuing, admins acknowledge the internal legal pack and the Version 1 pilot boundaries. Review{" "}
+          <Link className="legal-link" href="/legal/terms">
+            Terms
+          </Link>
+          ,{" "}
+          <Link className="legal-link" href="/legal/privacy">
+            Privacy
+          </Link>
+          ,{" "}
+          <Link className="legal-link" href="/legal/customer-agreement">
+            Customer Agreement
+          </Link>
+          , and{" "}
+          <Link className="legal-link" href="/legal/driver-agreement">
+            Driver Agreement
+          </Link>
+          .
         </p>
 
         <label className="field">

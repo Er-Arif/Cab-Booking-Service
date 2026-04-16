@@ -19,6 +19,13 @@ const navItems = [
 ];
 
 export function AppLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const isLegalPage = pathname.startsWith("/legal");
+
+  if (isLegalPage) {
+    return <PublicLegalLayout>{children}</PublicLegalLayout>;
+  }
+
   return (
     <AdminProvider>
       <AdminAuthGate>
@@ -27,6 +34,24 @@ export function AppLayout({ children }: { children: ReactNode }) {
         </AdminDataProvider>
       </AdminAuthGate>
     </AdminProvider>
+  );
+}
+
+function PublicLegalLayout({ children }: { children: ReactNode }) {
+  return (
+    <div className="legal-page-shell">
+      <header className="legal-header">
+        <div>
+          <span className="tag">Public legal access</span>
+          <h1>Madhupur Rides legal center</h1>
+          <p className="muted">Version 1 pilot legal templates for customers, drivers, operators, and reviewers.</p>
+        </div>
+        <Link className="button secondary" href="/legal">
+          Legal index
+        </Link>
+      </header>
+      <main className="main legal-main">{children}</main>
+    </div>
   );
 }
 
@@ -55,6 +80,27 @@ function AuthenticatedLayout({ children }: { children: ReactNode }) {
         <button className="button secondary sidebar-button" disabled={isBusy} onClick={() => logout()} type="button">
           Logout
         </button>
+        <div className="sidebar-legal">
+          <p className="muted">
+            Legal pack:
+            <br />
+            <Link className="legal-link" href="/legal/terms">
+              Terms
+            </Link>
+            {" · "}
+            <Link className="legal-link" href="/legal/privacy">
+              Privacy
+            </Link>
+            {" · "}
+            <Link className="legal-link" href="/legal/driver-agreement">
+              Driver
+            </Link>
+            {" · "}
+            <Link className="legal-link" href="/legal/customer-agreement">
+              Customer
+            </Link>
+          </p>
+        </div>
       </aside>
       <main className="main">{children}</main>
     </div>
