@@ -1,6 +1,6 @@
 # Version 1 Stable Local Release
 
-This note marks the first locally verified stable release after end-to-end testing across all Version 1 surfaces.
+This note marks the first locally verified stable Version 1 release of the Madhupur Ride Booking Platform.
 
 ## Verified surfaces
 - Backend API on `http://localhost:4000`
@@ -15,6 +15,11 @@ This note marks the first locally verified stable release after end-to-end testi
 - Customer ride booking payload handling is aligned with backend validation
 - Driver ride status transitions no longer fail due to the SQL parameter mismatch
 - Admin local data loading is more resilient, and the admin runtime was stabilized after a corrupted Next dev cache
+
+## Scope summary
+- Working backend, admin, customer, and driver local flows
+- Stable for local development, demos, rehearsal runs, and controlled Version 1 pilot validation
+- Still within mock, dev, and local provider boundaries for OTP, maps, notifications, and payments
 
 ## Intended use
 - Local development
