@@ -47,4 +47,5 @@ This repo treats documentation as a product artifact, not an afterthought.
   - [operations/version1-risk-register.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-risk-register.md)
   - [operations/version1-handoff.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-handoff.md)
   - [operations/version2-transition-plan.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version2-transition-plan.md)
+  - [operations/version1-stable-local-release.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/version1-stable-local-release.md)
 - Deferred roadmap: [operations/deferred-roadmap.md](/e:/MyProjects/Cab%20Booking%20Service/docs/operations/deferred-roadmap.md)
