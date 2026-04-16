@@ -36,6 +36,7 @@ interface AdminSnapshot {
   landmarks: Landmark[];
   summaryReport: SummaryReport;
   reportingHealth: ReportingHealth;
+  dataErrors?: string[];
 }
 
 interface AdminDataContextValue {
@@ -109,7 +110,9 @@ export function AdminDataProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     setError(null);
     try {
-      setSnapshot(await loadAdminSnapshot(currentSession));
+      const nextSnapshot = await loadAdminSnapshot(currentSession);
+      setSnapshot(nextSnapshot);
+      setError(nextSnapshot.dataErrors?.length ? nextSnapshot.dataErrors.join(" | ") : null);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "Failed to load admin data");
       setSnapshot((existing) => existing ?? initialSnapshot);

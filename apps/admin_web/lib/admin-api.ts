@@ -42,13 +42,16 @@ async function requestJson<T>(path: string, options: JsonOptions = {}): Promise<
     method: options.method ?? "GET",
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "no-cache, no-store, max-age=0",
+      Pragma: "no-cache",
       ...(options.token ? { Authorization: `Bearer ${options.token}` } : {}),
     },
     body: options.body ? JSON.stringify(options.body) : undefined,
     cache: "no-store",
   });
 
-  const data: unknown = await response.json();
+  const raw = await response.text();
+  const data: unknown = raw ? (JSON.parse(raw) as unknown) : null;
   if (!response.ok) {
     const message =
       typeof data === "object" && data !== null && "message" in data && typeof data.message === "string"
@@ -167,22 +170,8 @@ export async function getReportingHealth(token: string) {
 
 export async function loadAdminSnapshot(session: AdminSession) {
   const token = session.accessToken;
-  const [dashboard, drivers, customers, rides, complaints, categories, zones, landmarks, summaryReport, reportingHealth] =
-    await Promise.all([
-      getDashboard(token),
-      getDrivers(token),
-      getCustomers(token),
-      getRides(token),
-      getComplaints(token),
-      getCategories(token),
-      getZones(token),
-      getLandmarks(token),
-      getSummaryReport(token),
-      getReportingHealth(token),
-    ]);
-
-  return {
-    dashboard: dashboard.metrics,
+  const [
+    dashboard,
     drivers,
     customers,
     rides,
@@ -192,5 +181,75 @@ export async function loadAdminSnapshot(session: AdminSession) {
     landmarks,
     summaryReport,
     reportingHealth,
+  ] = await Promise.allSettled([
+    getDashboard(token),
+    getDrivers(token),
+    getCustomers(token),
+    getRides(token),
+    getComplaints(token),
+    getCategories(token),
+    getZones(token),
+    getLandmarks(token),
+    getSummaryReport(token),
+    getReportingHealth(token),
+  ]);
+
+  const dataErrors = [
+    dashboard,
+    drivers,
+    customers,
+    rides,
+    complaints,
+    categories,
+    zones,
+    landmarks,
+    summaryReport,
+    reportingHealth,
+  ]
+    .filter((result): result is PromiseRejectedResult => result.status === "rejected")
+    .map((result) => (result.reason instanceof Error ? result.reason.message : "Request failed"));
+
+  return {
+    dashboard:
+      dashboard.status === "fulfilled"
+        ? dashboard.value.metrics
+        : {
+            totalRidesToday: 0,
+            completedRides: 0,
+            cancelledRides: 0,
+            activeDrivers: 0,
+            activeCustomers: 0,
+            grossRevenue: 0,
+            platformCommission: 0,
+            topRoutes: [],
+            peakBookingHours: [],
+          },
+    drivers: drivers.status === "fulfilled" ? drivers.value : [],
+    customers: customers.status === "fulfilled" ? customers.value : [],
+    rides: rides.status === "fulfilled" ? rides.value : [],
+    complaints: complaints.status === "fulfilled" ? complaints.value : [],
+    categories: categories.status === "fulfilled" ? categories.value : [],
+    zones: zones.status === "fulfilled" ? zones.value : [],
+    landmarks: landmarks.status === "fulfilled" ? landmarks.value : [],
+    summaryReport:
+      summaryReport.status === "fulfilled"
+        ? summaryReport.value
+        : {
+            ridesPerCategory: [],
+            paymentMix: {
+              cash: 0,
+              upi: 0,
+            },
+            complaintOpenCount: 0,
+          },
+    reportingHealth:
+      reportingHealth.status === "fulfilled"
+        ? reportingHealth.value
+        : {
+            driversOnline: 0,
+            ridesActive: 0,
+            complaintsOpen: 0,
+          },
+    dataErrors,
   };
 }

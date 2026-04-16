@@ -328,17 +328,6 @@ export class PlatformRepository {
   }
 
   async updateRideStatus(rideId: string, status: RideStatus) {
-    const timestampColumn =
-      status === "driver_arrived"
-        ? "arrived_at"
-        : status === "trip_started"
-          ? "started_at"
-          : status === "trip_completed"
-            ? "completed_at"
-            : status.startsWith("cancelled")
-              ? "cancelled_at"
-              : null;
-
     const result = await this.db.query(
       `update rides
        set status = $2,
@@ -350,7 +339,7 @@ export class PlatformRepository {
            cancelled_at = case when $2 in ('cancelled_by_user', 'cancelled_by_driver', 'cancelled_by_admin') then now() else cancelled_at end
        where id = $1
        returning *`,
-      [rideId, status, timestampColumn]
+      [rideId, status]
     );
 
     if (!result.rows[0]) {
